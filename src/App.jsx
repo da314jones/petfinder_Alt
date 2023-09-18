@@ -2,6 +2,7 @@ import React from 'react'
 // import './App.css'
 import DogList from './components/DogList'
 import AdoptionProcess from './components/AdoptionProcess'
+import CharityDonations from './components/CharityDonations'
 function App() {
 
   return (
@@ -9,6 +10,7 @@ function App() {
     <h1>Dog List</h1>
       <DogList />
       <AdoptionProcess/>
+      <CharityDonations/>
     </>
   )
 }

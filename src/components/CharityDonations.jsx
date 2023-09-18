@@ -1,8 +1,9 @@
-import React from 'react';
+import React from "react";
 
 const CharityDonations = () => {
- 
-    const shelters = [/*fill with shelter list*/];
+  const shelters = [
+    /*fill with shelter list*/
+  ];
 
   return (
     <div className="charity-donations">
@@ -11,7 +12,11 @@ const CharityDonations = () => {
       <ul>
         {shelters.map((shelter) => (
           <li key={shelter.id}>
-            <a href={shelter.donationLink} target="_blank" rel="noopener noreferrer">
+            <a
+              href={shelter.donationLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {shelter.name}
             </a>
             - {shelter.location}
@@ -22,3 +27,4 @@ const CharityDonations = () => {
   );
 };
 
+export default CharityDonations;
