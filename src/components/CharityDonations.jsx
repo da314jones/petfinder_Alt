@@ -1,4 +1,5 @@
 import React from "react";
+import "./charity.css"
 
 const CharityDonations = () => {
   const shelters = [
