@@ -12,7 +12,7 @@ export default function DogDetails({ dog }) {
       <p>Medical History: {dog.medicalHistory}</p>
       <p>Special Needs: {dog.specialNeeds}</p>
       <p>Adoption Fee: ${dog.adoptionFee}</p>
-      {/* Add more details here */}
+      
     </div>
   );
 };
