@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './dogsearch.css'
 
 export default function DogSearch({ onSearch }) {
   const [breed, setBreed] = useState('');
@@ -10,7 +11,7 @@ export default function DogSearch({ onSearch }) {
   };
 
   return (
-    <div>
+    <div className='search'>
       <h2>Find Your Perfect Dog</h2>
       <label>
         Breed:

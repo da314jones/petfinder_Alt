@@ -4,6 +4,7 @@ import DogList from './components/DogList'
 import AdoptionProcess from './components/AdoptionProcess'
 import CharityDonations from './components/CharityDonations'
 import SupportSection from './components/SupportSection'
+import DogSearch from './components/DogSearch'
 // import DogDetails from './components/dogDetails'
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
       <AdoptionProcess/>
       <CharityDonations/>
       <SupportSection/>
+      <DogSearch/>
       {/* <DogDetails/> */}
 
 
