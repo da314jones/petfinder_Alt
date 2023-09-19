@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DogProfile from './DogProfile';
 
-export default function DogList() {
+export default function DogList({ animals}) {
   const [dogs, setDogs] = useState([]);
   const [error, setError] = useState(null);
 
@@ -11,16 +11,24 @@ export default function DogList() {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        return response.json();
+        return response.text(); 
       })
       .then((data) => {
-        setDogs(data);
+        console.log(data);
+        try {
+          const jsonData = JSON.parse(data);
+          setDogs(jsonData);
+        } catch (error) {
+          console.error('Error parsing JSON:', error);
+          setError('Error parsing JSON. Please check the response format.');
+        }
       })
       .catch((error) => {
         console.error('Error fetching animals:', error);
         setError('Error fetching animals. Please try again later.'); 
       });
   }, []);
+  
 
   if (error) {
     return <div className="error">{error}</div>;
@@ -28,14 +36,14 @@ export default function DogList() {
 
   return (
     <div className="dog-list">
-      {dogs.map((dog) => (
+      {animals.map((animal) => (
         <DogProfile
-          key={dog.id}
-          name={dog.name}
-          breed={dog.breed}
-          size={dog.size}
-          age={dog.age}
-          image={dog.image}
+          key={animal.id}
+          name={animal.name}
+          breed={animal.breed}
+          size={animal.size}
+          age={animal.age}
+          image={animal.image}
         />
       ))}
     </div>

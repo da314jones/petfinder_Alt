@@ -1,0 +1,34 @@
+.support-section {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  .support-section h2 {
+    color: #333;
+  }
+  
+  .support-section h3 {
+    margin-top: 20px;
+    color: #555;
+  }
+  
+  .support-section ul {
+    list-style-type: disc;
+    padding-left: 20px;
+  }
+  
+  .support-section li {
+    margin-bottom: 5px;
+  }
+  
+  .support-section p {
+    margin-bottom: 10px;
+  }
+  
+  .support-section p:last-child {
+    margin-bottom: 0;
+  }
+  

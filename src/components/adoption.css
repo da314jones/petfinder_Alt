@@ -1,0 +1,29 @@
+.adoption-form {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  .adoption-form h2 {
+    color: #333;
+  }
+  
+  .adoption-form p {
+    margin-bottom: 10px;
+  }
+  
+  .adoption-form ol {
+    margin-bottom: 10px;
+  }
+  
+  .adoption-form li {
+    margin-bottom: 5px;
+  }
+  
+  .adoption-form li::before {
+    content: "• ";
+    color: #333;
+  }
+  
