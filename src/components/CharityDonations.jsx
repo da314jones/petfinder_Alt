@@ -1,7 +1,7 @@
 import React from "react";
 import "./charity.css"
 
-const CharityDonations = () => {
+export default functions CharityDonations() {
 
   return (
     <div className="charity-donations">
@@ -25,4 +25,3 @@ const CharityDonations = () => {
   );
 };
 
-export default CharityDonations;

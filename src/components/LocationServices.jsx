@@ -6,7 +6,6 @@ export default function LocationServices() {
     enableHighAccuracy: false,
   });
 
-  // Define the userLocation state and setter function
   const [userLocation, setUserLocation] = useState(null);
 
   const toggleLocation = () => {

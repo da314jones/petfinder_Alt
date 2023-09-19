@@ -1,51 +1,84 @@
 import React, { useEffect, useState } from 'react';
 import DogProfile from './DogProfile';
+import { getAnimals } from '../../api/petfinder_api';
 
-export default function DogList({ dog }) {
+export default function DogList({ userLocation }) {
   const [dogs, setDogs] = useState([]);
+  const [selectedDogIds, setSelectedDogIds] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('/animals')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
+    async function fetchAnimalsWithToken() {
+      try {
+        let params = {};
+
+        if (userLocation) {
+          params = {
+            ...params,
+            location: `${userLocation.latitude},${userLocation.longitude}`,
+          };
         }
-        return response.text(); 
-      })
-      .then((data) => {
-        console.log(data);
-        try {
-          const jsonData = JSON.parse(data);
-          setDogs(jsonData);
-        } catch (error) {
-          console.error('Error parsing JSON:', error);
-          setError('Error parsing JSON. Please check the response format.');
+
+        const data = await getAnimals(params);
+        setDogs(data.animals);
+        setSelectedDogIds([]);
+      } catch (error) {
+        console.error('Error:', error);
+
+        if (error.response && error.response.status === 401) {
+          await getAnimals();
+          fetchAnimalsWithToken();
         }
-      })
-      .catch((error) => {
-        console.error('Error fetching animals:', error);
-        setError('Error fetching animals. Please try again later.'); 
-      });
-  }, []);
-  
+      }
+    }
+
+    fetchAnimalsWithToken();
+  }, [userLocation]);
+
+  const handleDogSelect = (dogId) => {
+    if (selectedDogIds.includes(dogId)) {
+      setSelectedDogIds((prevSelectedDogIds) =>
+        prevSelectedDogIds.filter((id) => id !== dogId)
+      );
+    } else {
+      setSelectedDogIds((prevSelectedDogIds) => [...prevSelectedDogIds, dogId]);
+    }
+  };
 
   if (error) {
     return <div className="error">{error}</div>;
   }
 
+  const selectedDogs = dogs.filter((dog) => selectedDogIds.includes(dog.id));
+
   return (
     <div className="dog-list">
-      {animals.map((animal) => (
-        <DogProfile
-          key={animal.id}
-          name={animal.name}
-          breed={animal.breed}
-          size={animal.size}
-          age={animal.age}
-          image={animal.image}
-        />
-      ))}
+      {selectedDogs.length > 0 && (
+        <div>
+          <h2>Selected Pets</h2>
+          <ul>
+            {selectedDogs.map((selectedDog) => (
+              <li key={selectedDog.id}>
+                <img src={selectedDog.photos[0]?.small} alt={selectedDog.name} />
+                {selectedDog.species}: {selectedDog.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <h2>Pet List</h2>
+      <ul>
+        {dogs.map((dog) => (
+          <li key={dog.id}>
+            <DogProfile
+              dog={dog}
+              isSelected={selectedDogIds.includes(dog.id)}
+              onDogSelect={handleDogSelect}
+            />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
