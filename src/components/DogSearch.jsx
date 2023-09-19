@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { getTokenUrl, getApiUrl } from '../../api/fetch';
 import { getApiKey, getApiSecret } from '../../api/api';
-import './dogsearch.css'
+import './DogSearch.css'
 
 export default function DogSearch() {
   const [breed, setBreed] = useState('');

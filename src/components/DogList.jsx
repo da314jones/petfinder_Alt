@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DogProfile from './DogProfile';
 
-export default function DogList({ animals}) {
+export default function DogList({ dog }) {
   const [dogs, setDogs] = useState([]);
   const [error, setError] = useState(null);
 

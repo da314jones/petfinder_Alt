@@ -2,9 +2,6 @@ import React from "react";
 import "./charity.css"
 
 const CharityDonations = () => {
-  const shelters = [
-    /*fill with shelter list*/
-  ];
 
   return (
     <div className="charity-donations">
