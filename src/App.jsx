@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAnimals } from "../petfinder_api";
+import { getAnimals } from "../api/petfinder_api";
 import Navbar from "./components/Navbar";
 import PetsList from "./components/PetsList";
 import PetProfile from "./components/PetProfile";

@@ -1,4 +1,6 @@
 import React from "react";
+import CardHeader from "react-bootstrap/esm/CardHeader";
+import { Card } from "react-bootstrap";
 
 export default function PetDetails({ details }) {
   if (!details || !details.photos || !Array.isArray(details.photos)) {
@@ -6,7 +8,7 @@ export default function PetDetails({ details }) {
   }
 
   return (
-    <div className="dog-details">
+    <Card className="dog-details">
       <h4>More photos of {details.name}</h4>
       <ul>
         {details.photos.map((photo, photoIndex) => (
@@ -62,6 +64,6 @@ export default function PetDetails({ details }) {
           </li>
         ))}
       </ul>
-    </div>
+    </Card>
   );
 }
