@@ -1,13 +1,43 @@
 import React from 'react';
+import { Card } from 'react-bootstrap';
 
-function PetProfile({ pet }) {
+export default function PetProfile({ pet, isSelected, onPetSelect }) {
+  const imageSrc = pet.primary_photo_cropped?.small || '';
+
+  const handleSelectClick = () => {
+    onPetSelect(pet);
+  };
+
   return (
-    <div className="pet-profile">
-      <h2>{pet.name}</h2>
-      <p>Age: {pet.age}</p>
+    <Card className={`profile-card ${isSelected ? 'selected' : ''}`}>
+      {imageSrc && <img src={imageSrc} alt={pet.name} />}
+      <h3>{pet.name}</h3>
+      <p>
+        <strong>Status:</strong> {pet.status}
+      </p>
+      <p>Type: {pet.species}</p>
       <p>Breed: {pet.breed}</p>
-    </div>
+      <p>Size: {pet.size}</p>
+      <p>Age: {pet.age}</p>
+      <p>Description: {pet.description}</p>
+      <p>
+  <strong></strong>
+  <a
+    href={pet.url}
+    onClick={(e) => {
+      if (!window.confirm("You are now leaving the current website. Click OK to continue or Cancel to stay.")) {
+        e.preventDefault();
+      }
+    }}
+  >
+     Sponsor this pet
+  </a>
+</p>
+      <p>Attributes: {pet.attributes ? JSON.stringify(pet.attributes) : 'N/A'}</p>
+      <p>Environment: {pet.environment ? JSON.stringify(pet.environment) : 'N/A'}</p>
+      <button onClick={handleSelectClick}>
+        {isSelected ? 'Deselect' : 'Select'}
+      </button>
+    </Card>
   );
 }
-
-export default PetProfile;
