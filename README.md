@@ -1,233 +1,58 @@
-# PetPal - Your Ultimate Furry Companion Finder 🐾
+# Pets Application
 
-Welcome to PetPal, the app that's paws-itively perfect for finding your next furry friend. Whether you're a cat person, a dog lover, or even a hedgehog enthusiast (we don't judge), PetPal has got you covered. Let's embark on this pet-tastic journey together!
+The **Pets Application** is a web-based application that allows users to explore a list of pets available for adoption, manage their favorite pets, and submit adoption applications. It provides a user-friendly interface to discover and interact with pets in need of a loving home.
 
-## Table of Contents
+## Features
 
-- [Getting Started](#getting-started)
-- [Features](#features)
-- [How to Use](#how-to-use)
-- [Contributing](#contributing)
-- [License](#license)
+- **Pet Listings:** Browse through a list of available pets, each with its own profile page containing detailed information about the pet.
+- **Favorite Pets:** Users can mark pets as their favorites, and these favorites will be stored for future reference.
+- **Adoption Application:** Users can submit adoption applications for their favorite pets.
+- **Location Services:** The application can determine the user's location to provide location-specific information.
 
 ## Getting Started
 
 ### Prerequisites
 
-- A heart full of love for our four-legged (or no-legged) companions.
-- An internet connection (because we're not sending pets by snail mail).
-- A device with a web browser.
+Before running the application, make sure you have the following installed:
+
+- Node.js
+- npm (Node Package Manager)
 
 ### Installation
 
-1. **Clone the Repository**
+1. Clone the repository to your local machine:
 
    ```bash
-   git clone https://github.com/your-username/PetPal.git
+   git clone https://github.com/your-username/pets-app.git
    ```
 
-2. **Navigate to the Project Directory**
+2. Navigate to the project directory:
 
    ```bash
-   cd PetPal
+   cd pets-app
    ```
 
-3. **Install Dependencies**
+3. Install the project dependencies:
 
    ```bash
    npm install
    ```
 
-4. **Start the App**
+### Running the Application
+
+1. Start the development server:
 
    ```bash
-   npm start
+   npm run dev
    ```
 
-5. **Open Your Browser**
 
-   - Go to [http://localhost:3000](http://localhost:3000)
-   - Get ready to meet some adorable pets!
+## Usage
 
-## Features
+- **Home Page:** The home page displays a list of available pets. Users can use the search bar to filter pets by name.
 
-### 1. Pet Profile Selector 🐶🐱
+- **Pet Profile:** Clicking on a pet's name or image will take you to the pet's profile page, where you can view more details about the pet.
 
-   - Click on a pet's profile to select it.
-   - But beware of duplicates; even pets can't stand copycats!
+- **Dashboard:** Users can access their dashboard by clicking on the "Dashboard" link. Here, they can manage their favorite pets and submit adoption applications.
 
-### 2. Favorites List ❤️
-
-   - Add your chosen furballs to your favorites list.
-   - It's like creating a dating profile, but for your future pet.
-
-### 3. Pending Adoption 🏠
-
-   - Keep track of the pets you're considering adopting.
-   - It's the virtual equivalent of sleeping on it.
-
-### 4. Adoption Form 📋
-
-   - Fill out an adoption form with your details.
-   - Because pets need to know where their forever home is!
-
-## How to Use
-
-1. **Browse the Pets**
-
-   - Start by browsing the available pets.
-   - Click on their profiles to get to know them better.
-
-2. **Select Your Favorites**
-
-   - Select your favorite pets.
-   - Just remember, pets are not Pokémon; you can't catch 'em all!
-
-3. **Save to Favorites**
-
-   - Click the "Save to Favorites" button to keep track of your top picks.
-   - It's like creating a wish list for your future cuddle buddies.
-
-4. **Adoption Form**
-
-   - Ready to take the plunge?
-   - Fill out the adoption form and get one step closer to pet parenthood.
-
-## Contributing
-
-We welcome contributions from fellow animal lovers! If you have any ideas for improving PetPal or want to report issues, feel free to:
-
-1. Fork the repository.
-2. Create a new branch.
-3. Make your changes.
-4. Create a pull request.
-
-We promise not to bite! 🐕🐈
-
-## License
-
-
-
-Thanks for choosing PetPal! We hope you find your perfect pet companion and make a lifetime of memories together. If you have any questions or need assistance, don't hesitate to reach out. Happy pet hunting! 🐶🐾🐱
-
-
-
-
-
-
-
-
-
-
-
-
-import React, { useState, useEffect } from "react";
-import { getAnimals } from "../../api/petfinder_api";
-import PetProfile from "./PetProfile";
-import Notification from "./Notifications";
-import PetDetails from "./PetDetails";
-
-export default function PetList() {
-  const [animals, setAnimals] = useState([]);
-  const [selectedProfiles, setSelectedProfiles] = useState([]);
-  const [showNotification, setShowNotification] = useState(false);
-  const [notificationMessage, setNotificationMessage] = useState("");
-
-  const handleProfileClick = (profile) => {
-    const isProfileSelected = selectedProfiles.some(
-      (selected) => selected.id === profile.id
-    );
-
-    if (!isProfileSelected) {
-      setSelectedProfiles((prevSelected) => [
-        ...prevSelected,
-        { ...profile, petID: profile.id },
-      ]);
-    }
-  };
-
-  const saveFavorites = () => {
-    localStorage.setItem(
-      "favorites",
-      JSON.stringify([...selectedProfiles])
-    );
-    setSelectedProfiles([]);
-
-    if (selectedProfiles.length > 0) {
-      const petNames = selectedProfiles
-        .map((profile) => profile.name)
-        .join(", ");
-      const newNotificationMessage = `${petNames} have been added to favorites.`;
-      setNotificationMessage(newNotificationMessage);
-      setShowNotification(true);
-    }
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Make the API call using getAnimals function
-        const response = await getAnimals();
-
-        // Check if the response contains animals data
-        if (response && response.animals) {
-          setAnimals(response.animals);
-        } else {
-          console.error("API response does not contain animals data.");
-        }
-      } catch (error) {
-        console.error("Error fetching animals:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    if (showNotification) {
-      const timeoutId = setTimeout(() => {
-        setShowNotification(false);
-      }, 3000);
-
-      return () => clearTimeout(timeoutId);
-    }
-  }, [showNotification]);
-
-  return (
-    <div className="pet-list">
-      <button onClick={saveFavorites}>Save Selected as Favorites</button>
-      {animals.length === 0 ? (
-        <p>No pets available.</p>
-      ) : (
-        animals.map((animal) => (
-          <div key={animal.id}>
-            <PetProfile
-              pet={animal}
-              isSelected={selectedProfiles.some((selected) => selected.id === animal.id)}
-              onPetSelect={() => handleProfileClick(animal)}
-            />
-            <PetDetails
-              details={animal}
-              isSelected={selectedProfiles.some((selected) => selected.id === animal.id)}
-              onPetSelect={() => handleProfileClick(animal)}
-            />
-          </div>
-        ))
-      )}
-      {showNotification && (
-        <Notification
-          message={notificationMessage}
-          onClose={() => setShowNotification(false)}
-        />
-      )}
-    </div>
-  );
-}
-
-
-
-
-
-
-
-
+- **Adoption Application:** Users can access the adoption application form by clicking on the "Adoption Application" link. Here, they can fill out and submit an adoption application for their favorite pets.

@@ -1,0 +1,33 @@
+/* Header Styles */
+.header-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+     background-color: #333;
+    color: #fff; 
+    padding: 10px 20px; 
+    z-index: 1000; 
+  }
+  
+  /* Mobile Styles */
+  @media (max-width: 767px) {
+    .header-container {
+      height: 50px;
+      top: 0; 
+    left: 0;
+    right: 0; 
+    }
+  }
+  
+  /* Desktop Styles */
+  @media (min-width: 768px) {
+    .header-container {
+      height: 80px;
+      position: fixed;
+    bottom: 0; 
+    left: 0;
+    right: 0; 
+    }
+  }
+  

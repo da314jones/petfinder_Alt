@@ -1,0 +1,59 @@
+div.card-title.h5 {
+  font-size: 40px;
+}
+
+.title {
+  color: rgb(97, 195, 97);
+}
+
+.card-container {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
+.first-set {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+  border-radius: 15px;
+  border-bottom: none;
+  font-size: x-large;
+  background-color: rgba(255, 0, 0, 0.677);
+  width: 65%;
+}
+
+p.card-text {
+    display: flex;
+    
+}
+
+.link {
+  color: greenyellow;
+}
+
+.status {
+  color: greenyellow;
+}
+
+.third-set {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+  border-radius: 15px;
+  border-top: none;
+  border-bottom: none;
+  font-size: x-large;
+  background-color: rgba(255, 0, 0, 0.677);
+  width: 65%;
+}
+
+button {
+  background-color: rgba(255, 0, 0, 0.677);
+  width: 300px;
+  color: rgb(97, 195, 97);
+}

@@ -1,0 +1,15 @@
+button {
+    width: 100px;
+    border-radius: 10px;
+}
+
+.submit {
+    height: 40px;
+    width: 200px;
+    background-color: green;
+    color: white;
+}
+
+.form-text {
+    font-size: 20px;
+}

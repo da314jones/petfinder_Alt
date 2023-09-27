@@ -1,33 +1,76 @@
-// App.js
-import React, { useState } from 'react';
-import { Navbar, Container } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import PetList from './components/PetsList';
-import PetSearchBar from './components/PetSearchBar'; 
+import Home from './components/Home';
+import NavBar from './components/NavBar';
+import Favorites from './components/Favorites';
+import PetProfile from './components/PetProfile';
+import ErrorBoundary from './components/ErrorBoundary';
+import UserDashboard from './components/UserDashboard';
+import PetAdoptionApplication from './components/PetAdoptionApplication';
+import LocationServices from './components/LocationServices'; 
+import PetSearchBar from './components/PetSearchBar';
+import "./App.css"
+import './components/Header.css'
 
 export default function App() {
   const [pets, setPets] = useState([]);
+  const [location, setLocation] = useState(null);
+  const [favorites, setFavorites] = useState([]);
 
-  const handleSearch = (results) => {
-    setSearchResults(results);
+  const handleLocationRequest = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        setLocation({ latitude, longitude });
+      });
+    }
   };
 
+  useEffect(() => {
+    if (location) {
+      console.log("New location set:", location);
+    }
+  }, [location]);
+
+  useEffect(() => {
+    const loadFavoritesFromLocalStorage = () => {
+      try {
+        const favoritesFromStorage = JSON.parse(localStorage.getItem('favorites')) || [];
+        setFavorites(favoritesFromStorage);
+        console.log('Successfully loaded favorites from Local Storage:', favoritesFromStorage);
+      } catch (error) {
+        console.error('Error retrieving favorites from local storage:', error);
+      }
+    };
+
+    loadFavoritesFromLocalStorage();
+  }, []);
+
+  const removeFavorite = (petId) => {
+    const updatedFavorites = favorites.filter((pet) => pet.id !== petId);
+    setFavorites(updatedFavorites);
+
+    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+  };
+
+  console.log('Favorites:', favorites);
+
+
   return (
-    <div>
-      <Navbar bg="light" expand="lg">
-        <Container>
-          <Navbar.Brand>PetFinder</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <PetSearchBar setPets={setPets} />
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-      <Container>
-        <h1>Pet List</h1>
-        <PetList pets={pets} />
-      </Container>
-    </div>
+    <ErrorBoundary>
+        <header>
+        <NavBar />
+        <PetSearchBar setPets={setPets} /> 
+        <LocationServices location={location} /> 
+        </header>
+        <Routes>
+  <Route path="/" element={<Home />} />
+  <Route path="/pet/:id" element={<PetProfile pet={pets} />} />
+  <Route path="/userDashboard/:id" element={<UserDashboard favorites={favorites} removeFavorite={removeFavorite} />} />
+  <Route path="/petlist" element={<PetList pets={pets} />} />
+  <Route path="/adoption" element={<PetAdoptionApplication />} />
+</Routes>
+    </ErrorBoundary>
   );
 }
-
-

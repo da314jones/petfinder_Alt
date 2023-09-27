@@ -1,17 +1,21 @@
 import React from 'react';
 import PetCard from './PetCard';
-import AppNavbar from './Navbar';
+import { Link } from 'react-router-dom';
+import './PetsList.css';
 
-export default function PetList({ pets, onView }) {
+export default function PetList({ pets }) {
+  console.log("Received pets:", pets);
+
   return (
-    <div className="pet-list">
+    <div className="pet-list-container">
+      <h1>Pets</h1>
+      <div className="pet">
       {pets.map((pet) => (
-        <PetCard key={pet.id} pet={pet} onView={onView} />
+        <Link to={`/pet/${pet.id}`} key={pet.id}>
+          <PetCard pet={pet} id={pet.id} />
+        </Link>
       ))}
-      
-     
+    </div>
     </div>
   );
 };
-
-

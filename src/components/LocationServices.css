@@ -1,0 +1,15 @@
+.geo-container {
+    color: black;
+    background-color: rgb(97, 195, 97);
+    ;
+}
+
+
+.geo-container {
+    display: flex; 
+    flex-direction: row;
+    justify-content: right;
+  }
+/*   */
+  
+  /*  */

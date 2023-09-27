@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App.jsx'
 import dotenv from 'dotenv';
 import './index.css'
+import './styles.css'
 
 if (typeof window === 'undefined') {
   dotenv.config();

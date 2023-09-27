@@ -24,8 +24,8 @@ async function fetchAccessToken() {
   }
 }
 
-// Updated getAnimals function to accept query parameters
-async function getAnimals(queryParams = {}) {
+
+async function getAnimals(queryParams = {}, location = {}) {
   try {
     if (!accessToken) {
       await fetchAccessToken();
@@ -35,15 +35,16 @@ async function getAnimals(queryParams = {}) {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-      params: queryParams, // Pass the query parameters to the API call
+      params: { ...queryParams, location }, 
     });
-
+console.log("Response:", response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching animals:', error);
     throw error;
   }
 }
+
 
 async function getPetById(id) {
   try {

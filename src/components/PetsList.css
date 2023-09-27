@@ -1,0 +1,15 @@
+.pet-list-container {
+    text-align: center; 
+    color: red;
+    border: 5px solid black;
+    font-size: 60px;
+  }
+  
+  .pet-cards {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center;
+  }
+  
+  
+  

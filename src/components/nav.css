@@ -1,0 +1,14 @@
+.nav-container {
+    color: red;
+    background-color: rgb(97, 195, 97);
+}
+
+.adoption, .dashboard, .pets-list, .home  {
+    color: rgb(158, 51, 51);
+    background-color: rgb(97, 195, 97);
+}
+
+.navbar-script {
+    background-color: rgb(97, 195, 97);
+
+}

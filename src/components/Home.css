@@ -1,0 +1,14 @@
+/* html, body {
+    overflow: hidden;
+/* } */
+
+.home-container {
+    display: flex;
+    justify-content: center;
+    font-size: 80px;
+    background-color: rgb(97, 195, 97);
+    color: rgba(158, 51, 51, 0.766);
+
+}  
+
+

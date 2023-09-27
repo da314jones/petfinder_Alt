@@ -1,0 +1,32 @@
+.search-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: right;
+  background-color: grey;
+}
+
+.input-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 10px;
+  background-color: grey;
+  color: black;
+
+}
+
+ input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+      margin-right: 10px;
+      background-color: grey;
+      color: black;
+
+}
+button {
+    background-color: grey;
+
+}
+

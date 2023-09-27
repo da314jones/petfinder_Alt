@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import './LocationServices.css'
 
-export default function LocationServices() {
+export default function LocationServices({ setLocation }) {
   const [isLocationEnabled, setLocationEnabled] = useState(false);
   const [locationOptions, setLocationOptions] = useState({
-    enableHighAccuracy: false, 
-    maximumAge: 0, 
-    timeout: Infinity, 
+    enableHighAccuracy: false,
+    maximumAge: 0,
+    timeout: Infinity,
   });
 
   useEffect(() => {
@@ -16,6 +17,21 @@ export default function LocationServices() {
     }
   }, []);
 
+  useEffect(() => {
+    if (isLocationEnabled) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setLocation({ latitude, longitude });
+        },
+        (error) => {
+          console.error(error);
+        },
+        locationOptions
+      );
+    }
+  }, [isLocationEnabled, locationOptions, setLocation]);
+
   const toggleLocation = () => {
     setLocationEnabled(!isLocationEnabled);
   };
@@ -23,7 +39,6 @@ export default function LocationServices() {
   const handleOptionsChange = (event) => {
     const { name, value, type, checked } = event.target;
     const newValue = type === 'checkbox' ? checked : value;
-
     setLocationOptions({
       ...locationOptions,
       [name]: newValue,
@@ -31,8 +46,8 @@ export default function LocationServices() {
   };
 
   return (
-    <div className="location-services">
-      <p>Enable or disable geolocation services.</p>
+    <div className="geo-container">
+      <p>Geolocation services.</p>
       <label>
         <input
           type="checkbox"
@@ -40,22 +55,8 @@ export default function LocationServices() {
           checked={isLocationEnabled}
           onChange={toggleLocation}
         />{' '}
-        Enable Geolocation
+        Enable
       </label>
-
-      {isLocationEnabled && (
-        <div>
-          <label>
-            <input
-              type="checkbox"
-              name="enableHighAccuracy"
-              checked={locationOptions.enableHighAccuracy}
-              onChange={handleOptionsChange}
-            />{' '}
-            Enable High Accuracy (GPS)
-          </label>
-        </div>
-      )}
     </div>
   );
 }
