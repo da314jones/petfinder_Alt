@@ -24,7 +24,8 @@ async function fetchAccessToken() {
   }
 }
 
-async function getAnimals() {
+// Updated getAnimals function to accept query parameters
+async function getAnimals(queryParams = {}) {
   try {
     if (!accessToken) {
       await fetchAccessToken();
@@ -34,6 +35,7 @@ async function getAnimals() {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
+      params: queryParams, // Pass the query parameters to the API call
     });
 
     return response.data;

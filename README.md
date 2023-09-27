@@ -109,3 +109,125 @@ We promise not to bite! 🐕🐈
 
 
 Thanks for choosing PetPal! We hope you find your perfect pet companion and make a lifetime of memories together. If you have any questions or need assistance, don't hesitate to reach out. Happy pet hunting! 🐶🐾🐱
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useState, useEffect } from "react";
+import { getAnimals } from "../../api/petfinder_api";
+import PetProfile from "./PetProfile";
+import Notification from "./Notifications";
+import PetDetails from "./PetDetails";
+
+export default function PetList() {
+  const [animals, setAnimals] = useState([]);
+  const [selectedProfiles, setSelectedProfiles] = useState([]);
+  const [showNotification, setShowNotification] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState("");
+
+  const handleProfileClick = (profile) => {
+    const isProfileSelected = selectedProfiles.some(
+      (selected) => selected.id === profile.id
+    );
+
+    if (!isProfileSelected) {
+      setSelectedProfiles((prevSelected) => [
+        ...prevSelected,
+        { ...profile, petID: profile.id },
+      ]);
+    }
+  };
+
+  const saveFavorites = () => {
+    localStorage.setItem(
+      "favorites",
+      JSON.stringify([...selectedProfiles])
+    );
+    setSelectedProfiles([]);
+
+    if (selectedProfiles.length > 0) {
+      const petNames = selectedProfiles
+        .map((profile) => profile.name)
+        .join(", ");
+      const newNotificationMessage = `${petNames} have been added to favorites.`;
+      setNotificationMessage(newNotificationMessage);
+      setShowNotification(true);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Make the API call using getAnimals function
+        const response = await getAnimals();
+
+        // Check if the response contains animals data
+        if (response && response.animals) {
+          setAnimals(response.animals);
+        } else {
+          console.error("API response does not contain animals data.");
+        }
+      } catch (error) {
+        console.error("Error fetching animals:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (showNotification) {
+      const timeoutId = setTimeout(() => {
+        setShowNotification(false);
+      }, 3000);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [showNotification]);
+
+  return (
+    <div className="pet-list">
+      <button onClick={saveFavorites}>Save Selected as Favorites</button>
+      {animals.length === 0 ? (
+        <p>No pets available.</p>
+      ) : (
+        animals.map((animal) => (
+          <div key={animal.id}>
+            <PetProfile
+              pet={animal}
+              isSelected={selectedProfiles.some((selected) => selected.id === animal.id)}
+              onPetSelect={() => handleProfileClick(animal)}
+            />
+            <PetDetails
+              details={animal}
+              isSelected={selectedProfiles.some((selected) => selected.id === animal.id)}
+              onPetSelect={() => handleProfileClick(animal)}
+            />
+          </div>
+        ))
+      )}
+      {showNotification && (
+        <Notification
+          message={notificationMessage}
+          onClose={() => setShowNotification(false)}
+        />
+      )}
+    </div>
+  );
+}
+
+
+
+
+
+
+
+

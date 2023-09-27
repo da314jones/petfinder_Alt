@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Object = ({animals }) => {
+const Object = ({ animals }) => {
   return (
     <div>
       <h2>Petfinder API Data</h2>

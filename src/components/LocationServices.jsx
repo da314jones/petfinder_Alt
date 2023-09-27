@@ -32,8 +32,7 @@ export default function LocationServices() {
 
   return (
     <div className="location-services">
-      <h2>Location Services</h2>
-      <p>Enable or disable geolocation services and configure options.</p>
+      <p>Enable or disable geolocation services.</p>
       <label>
         <input
           type="checkbox"
@@ -46,7 +45,6 @@ export default function LocationServices() {
 
       {isLocationEnabled && (
         <div>
-          <h3>Geolocation Options</h3>
           <label>
             <input
               type="checkbox"
