@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import PetList from './components/PetsList';
 import Home from './components/Home';
 import NavBar from './components/NavBar';
-import Favorites from './components/Favorites';
 import PetProfile from './components/PetProfile';
 import ErrorBoundary from './components/ErrorBoundary';
 import UserDashboard from './components/UserDashboard';
