@@ -3,7 +3,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import "./nav.css";
 
-export default function NavBar() {
+export default function AppNavBar() {
   return (
     <Navbar className="navbar-script ">
       <Container className="nav_container">

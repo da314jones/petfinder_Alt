@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import PetList from './components/PetsList';
 import Home from './components/Home';
-import NavBar from './components/NavBar';
+import NavBar from './components/AppNavbar';
 import PetProfile from './components/PetProfile';
 import ErrorBoundary from './components/ErrorBoundary';
 import UserDashboard from './components/UserDashboard';
@@ -59,7 +59,7 @@ export default function App() {
   return (
     <ErrorBoundary>
         <header>
-        <NavBar />
+        <AppNavBar />
         <PetSearchBar setPets={setPets} /> 
         <LocationServices location={location} /> 
         </header>
